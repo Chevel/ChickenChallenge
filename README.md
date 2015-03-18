@@ -2,4 +2,4 @@
 
 originaly called "MacAttack"
 
-"Igra.m" is the main game file locate in the "/MacAttack" directory
+"Igra.m" is the main game file located in the "/MacAttack" directory
