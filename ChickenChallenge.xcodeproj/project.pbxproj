@@ -130,7 +130,6 @@
 		03044ECE1665225500E5D7D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		03044ED01665225500E5D7D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		03044ED21665225500E5D7D7 /* ChickenChallenge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChickenChallenge-Prefix.pch"; sourceTree = "<group>"; };
-		03045126166523CF00E5D7D7 /* libXNI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXNI.a; path = Xni/libXNI.a; sourceTree = "<group>"; };
 		03045128166523FA00E5D7D7 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		03045129166523FA00E5D7D7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		0304512A166523FA00E5D7D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -341,7 +340,6 @@
 				3FBAAE8719462D9A003FCC0A /* libXNI.a */,
 				3F93E034192A22A800003250 /* Social.framework */,
 				3F263A311917B8BC00666F1D /* iAd.framework */,
-				03045126166523CF00E5D7D7 /* libXNI.a */,
 				03045132166524DE00E5D7D7 /* GameKit.framework */,
 				03045130166524D500E5D7D7 /* AVFoundation.framework */,
 				0304512E166524CB00E5D7D7 /* AudioToolbox.framework */,
@@ -795,7 +793,7 @@
 		03044EB71665225500E5D7D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					03044EBF1665225500E5D7D7 = {
 						DevelopmentTeam = 8655G2C775;
@@ -969,7 +967,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -988,7 +986,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -1007,20 +1005,13 @@
 				GCC_PREFIX_HEADER = "MacAttack/ChickenChallenge-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "MacAttack/ChickenChallenge-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Xni\"",
-					"$(PROJECT_DIR)/Xni",
-					"$(PROJECT_DIR)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/XNI-egafyljrdmqrgmcfkkhjatmxlsfk/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/XNI",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = ChickenChallenge;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/XNI/usr/local/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1035,20 +1026,13 @@
 				GCC_PREFIX_HEADER = "MacAttack/ChickenChallenge-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "MacAttack/ChickenChallenge-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Xni\"",
-					"$(PROJECT_DIR)/Xni",
-					"$(PROJECT_DIR)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/XNI-egafyljrdmqrgmcfkkhjatmxlsfk/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/XNI",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = ChickenChallenge;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/XNI/usr/local/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -28,9 +28,11 @@ static GameKitHelper *sharedHelper = nil;
     
     [sharedHelper setGame:theGame];
     
-    [sharedHelper setGameWindow:(GameWindow*)[theGame gameWindow]];
+    GameWindow *gameWindow = (GameWindow*)[theGame gameWindow];
+    [sharedHelper setGameWindow:gameWindow];
     
-    [sharedHelper setGameViewController: [[theGame gameWindow] gameViewController] ];
+    [sharedHelper setGameViewController: [ gameWindow gameViewController] ];
+    
     
     
     // because this class is a singleton, gameCenterAvailable is checked and set with every method
@@ -252,7 +254,7 @@ static GameKitHelper *sharedHelper = nil;
                     
                     gamePaused = YES;
                     
-                    
+                
                     
                 }
                 else if(error)

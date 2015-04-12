@@ -11,8 +11,6 @@
 		25AE5D5315F5440B00B73D10 /* RenderTarget2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 25AE5D5115F5440B00B73D10 /* RenderTarget2D.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25AE5D5415F5440B00B73D10 /* RenderTarget2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AE5D5215F5440B00B73D10 /* RenderTarget2D.m */; };
 		25B3F9E615F9CC0E00C7DF1E /* RenderTarget2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AE5D5215F5440B00B73D10 /* RenderTarget2D.m */; };
-		3FBAAE8519462A70003FCC0A /* GameViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B5DE194811F89C0900BF3275 /* GameViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3FBAAE8619462ABD003FCC0A /* GameView.h in Headers */ = {isa = PBXBuildFile; fileRef = B5DE194C11F89C1F00BF3275 /* GameView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		B50769151264EE9500E4474F /* GameComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B50769131264EE9500E4474F /* GameComponent.m */; };
 		B507691D1264EF0B00E4474F /* DrawableGameComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B507691B1264EF0B00E4474F /* DrawableGameComponent.m */; };
@@ -666,7 +664,7 @@
 		B57E36BF124BE2DD00DDAA42 /* VertexPositionColorTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E36BD124BE2DD00DDAA42 /* VertexPositionColorTexture.m */; };
 		B57E36CD124BE36E00DDAA42 /* VertexPositionColorTextureArray.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E36CB124BE36E00DDAA42 /* VertexPositionColorTextureArray.m */; };
 		B594878612AEF44900EE601F /* XniPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B594878412AEF44900EE601F /* XniPoint.m */; };
-		B5956CCA1663BD2700FC01F5 /* MediaPlayer+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B5956CC91663BD2700FC01F5 /* MediaPlayer+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5956CCA1663BD2700FC01F5 /* MediaPlayer+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B5956CC91663BD2700FC01F5 /* MediaPlayer+Internal.h */; };
 		B59AD7F11236E07300F99511 /* ContentImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B59AD7EF1236E07300F99511 /* ContentImporter.m */; };
 		B59AD8121236E25700F99511 /* TextureImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B59AD8101236E25700F99511 /* TextureImporter.m */; };
 		B59AD8201236E59A00F99511 /* ContentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B59AD81E1236E59A00F99511 /* ContentItem.m */; };
@@ -2038,9 +2036,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5956CCA1663BD2700FC01F5 /* MediaPlayer+Internal.h in Headers */,
-				3FBAAE8519462A70003FCC0A /* GameViewController.h in Headers */,
-				3FBAAE8619462ABD003FCC0A /* GameView.h in Headers */,
 				B54E74811356233D007AD718 /* Retronator.Devices.Sensors.classes.h in Headers */,
 				B54E74821356233D007AD718 /* Retronator.Devices.Sensors.h in Headers */,
 				B54E74831356233D007AD718 /* SensorsEnums.h in Headers */,
@@ -2257,6 +2252,7 @@
 				B54E75561356241B007AD718 /* ReadOnlyCollection.h in Headers */,
 				B54E75571356241B007AD718 /* IAsyncResult.h in Headers */,
 				25AE5D5315F5440B00B73D10 /* RenderTarget2D.h in Headers */,
+				B5956CCA1663BD2700FC01F5 /* MediaPlayer+Internal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2687,8 +2683,7 @@
 		1DEB921F08733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/XNI.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2697,41 +2692,34 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XNI_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = XNI;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 			};
 			name = Debug;
 		};
 		1DEB922008733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DSTROOT = /tmp/XNI.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XNI_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = XNI;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
 			};
 			name = Release;
 		};
 		1DEB922308733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -2743,16 +2731,12 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 2;
-				USER_HEADER_SEARCH_PATHS = "$(\"SRCROOT)\"/**";
 			};
 			name = Debug;
 		};
 		1DEB922408733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2761,15 +2745,13 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 2;
-				USER_HEADER_SEARCH_PATHS = "$(\"SRCROOT)\"/**";
 			};
 			name = Release;
 		};
 		B570A31C13E1DC3B0085E85E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/XNI.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2783,14 +2765,13 @@
 				PRODUCT_NAME = XNI;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$\"(SRCROOT)\"/**";
 			};
 			name = Debug;
 		};
 		B570A31D13E1DC3B0085E85E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DSTROOT = /tmp/XNI.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2801,7 +2782,6 @@
 				PRODUCT_NAME = XNI;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$\"(SRCROOT)\"/**";
 			};
 			name = Release;
 		};
