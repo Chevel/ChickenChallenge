@@ -113,7 +113,7 @@
 
     
     currentTime = [[NSDate date] timeIntervalSince1970];
-    age = fabsf(startTime-currentTime);
+    age = fabs(startTime-currentTime);
 }
 
 
