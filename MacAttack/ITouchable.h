@@ -16,7 +16,7 @@
 /**
  Defines a class with a 2D position property.
  */
-@protocol Itouchable
+@protocol ITouchable
 
 
 - (void) setCamera:(Matrix *)camera;

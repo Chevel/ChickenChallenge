@@ -256,7 +256,7 @@
             [igra setIntroStart:false];
         }
         NSTimeInterval _tmpTime = [[NSDate date] timeIntervalSince1970];
-        NSTimeInterval _introDuration = fabsf(introStart - _tmpTime);
+        NSTimeInterval _introDuration = fabs(introStart - _tmpTime);
         AnimatedSprite *animation = [animations getAnimation:IntroAnimation];
 
         
@@ -573,7 +573,7 @@
                         }
                         
                         currentTime = [[NSDate date] timeIntervalSince1970];
-                        float _introDuration = fabsf(startDeath - currentTime);
+                        float _introDuration = fabs(startDeath - currentTime);
                         
                         int val = (int) (_introDuration*10);
                         

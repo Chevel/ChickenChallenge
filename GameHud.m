@@ -77,9 +77,9 @@
     
 	[iRate sharedInstance].onlyPromptIfLatestVersion = NO;
     [iRate sharedInstance].message = @"This game is soo awesome, that I need to rate. I mean NOW !";
-    [iRate sharedInstance].RateButtonLabel = @"YES";
-    [iRate sharedInstance].RemindButtonLabel = @"Remind me later";
-    [iRate sharedInstance].CancelButtonLabel = @"No thanks, still bored";
+    [iRate sharedInstance].rateButtonLabel = @"YES";
+    [iRate sharedInstance].remindButtonLabel = @"Remind me later";
+    [iRate sharedInstance].cancelButtonLabel = @"No thanks, still bored";
 
 
     //disable minimum day limit and reminder periods

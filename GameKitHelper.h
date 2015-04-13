@@ -20,10 +20,7 @@
 
 
 
-@interface GameKitHelper : NSObject<GKLeaderboardViewControllerDelegate,GKAchievementViewControllerDelegate,
-    GKGameCenterControllerDelegate,
-    GameKitHelperProtocol,
-    ADInterstitialAdDelegate>
+@interface GameKitHelper : NSObject<GKGameCenterControllerDelegate, GameKitHelperProtocol,ADInterstitialAdDelegate>
 {
     id < GameKitHelperProtocol > delegate;
     BOOL gameCenterFeaturesAvailable;
@@ -62,11 +59,8 @@
 
 // Player authentication, info
 -(void) authenticateLocalPlayer;
--(void) getLocalPlayerFriends;
--(void) getPlayerInfo:(NSArray*)players;
 
 -(void) showGameCenter;
--(void) onScoresReceived;
 
 -(GameViewController *) gameViewController;
 
