@@ -146,7 +146,7 @@
     
     nowTime = [[NSDate date] timeIntervalSince1970];
     
-    deadTime = fabsf(timeOfDeath-nowTime);
+    deadTime = fabs(timeOfDeath-nowTime);
     
 
 }
@@ -160,7 +160,6 @@
 - (void) reincarnation{}
 - (BOOL) atCenter{}
 */
-
 
 
 @end

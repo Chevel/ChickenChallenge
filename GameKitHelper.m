@@ -348,8 +348,7 @@ static GameKitHelper *sharedHelper = nil;
     {
         gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
         gameCenterController.gameCenterDelegate = self;
-        gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeAllTime;
-        gameCenterController.leaderboardCategory = leaderboardID;
+        gameCenterController.leaderboardIdentifier = leaderboardID;
         
         [gameViewController presentViewController:gameCenterController animated:YES completion:nil];
         
@@ -362,10 +361,7 @@ static GameKitHelper *sharedHelper = nil;
    // NSLog(@" YES ");
 }
 
--(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController{
-    NSLog(@"in leaderboardControllerDidFinish");
-    [gameViewController dismissViewControllerAnimated: YES completion:nil];
-}
+
 
 
 
@@ -377,69 +373,34 @@ static GameKitHelper *sharedHelper = nil;
     
     if( !gameCenterFeaturesAvailable ) return;
 
-/*
-    GKScore *myScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
-    myScore.value = score;
     
-    [GKScore reportScores:@[myScore] withCompletionHandler:^(NSError *error) {
-        if (error != nil) {
-            NSLog(@"%@", [error localizedDescription]);
-        }
-    }];
-*/
     NSLog(@" SUBMIT SCORE ");
     NSLog(@"%@",identifier);
     NSLog(@"%d",score);
     NSLog(@"-------------");
     
     GKScore * GCscore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
-    GCscore.value = score;
+    GCscore.value = score; // has to be set, see GKScore class reference
     
-    [GCscore reportScoreWithCompletionHandler:^(NSError *error) {
+    NSNumber *theScore = [[NSNumber alloc]initWithInt:score];
+    NSArray *scores = [[NSArray alloc] initWithObjects:theScore, nil];
+    
+    
+
+    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             if (error == NULL) {
-                NSLog(@"Score Sent = %lld", GCscore.value);
-                
-            } else {
+                NSLog(@"Score Sent = %d", score);
+            }
+            else {
                 NSLog(@"Score Failed, %@",[error localizedDescription]);
             }
         });
     }];
-    
-    
-    
 
-    /*
-
-    GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: identifier];
-    scoreReporter.value = score;
-    scoreReporter.context = 0;
     
-    NSArray *scores = @[scoreReporter];
-    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
-        if (error == nil) {
-            NSLog(@"Score reported successfully!");
-        } else {
-            NSLog(@"Unable to report score!");
-        }
-    }];
     
-    */
     
-    /*
-    GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: identifier];
-	scoreReporter.value = score;
-    scoreReporter.context = 0;
-	[scoreReporter reportScoreWithCompletionHandler: ^(NSError *error){
-        
-        if (error != nil)
-        {
-             // handle the reporting error
-            NSLog(@" ERROR REPORTING SCORE ");
-        }
-        
-	 }];
-    */
     
     
     

@@ -11,6 +11,9 @@
 #import "Retronator.Xni.Framework.h"
 
 
+@protocol ITouchable;
+
+
 @interface Enemy : GameComponent <IKillable, IMovable, ITouchable>{
 
     BOOL respawn;
@@ -60,8 +63,9 @@
 
 @property BOOL respawn, startAnimation;
 @property Boolean dead;
-@property int life, worth;
+@property int worth;
 @property float speed;
+
 
 
 - (void) updateWithGameTime:(GameTime *)gameTime;
