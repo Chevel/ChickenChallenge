@@ -43,6 +43,8 @@
         [background setScaleUniform: 1.0];
         [scene addItem:background];
         
+        // SHOW BANNER
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapShowInterstitialBreak];
         
         
         // TITLE LABEL

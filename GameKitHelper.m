@@ -12,6 +12,8 @@
 
 #import <iAd/iAd.h>
 
+#import "TapForTap.framework/Headers/TFTTapForTap.h"
+
 
 @implementation GameKitHelper
 
@@ -200,7 +202,19 @@ static GameKitHelper *sharedHelper = nil;
 }
 
 
+//
+// TapForTap Ad
+//
+- (void) tapForTapShowInterstitialBreak
+{
 
+    [TFTInterstitial loadBreakInterstitialWithCallbackOnReceivedAd:^(TFTInterstitial *interstitial) {
+        [interstitial showWithViewController:gameViewController];
+    } onAdDidFail:^(TFTInterstitial *interstitial, NSString *reason) {
+        NSLog(@"Ad failed: %@", reason);
+    } onAdDidShow:nil onAdWasTapped:nil onAdWasDismissed:nil];
+     
+}
 
 //
 // PLAYER

@@ -346,7 +346,7 @@
         }
         
         currentTime = [[NSDate date] timeIntervalSince1970];
-        int difference = abs(startTime-currentTime);
+        int difference = fabs(startTime-currentTime);
         
         //NSLog(@" DIFFERENCE = %d", difference);
         

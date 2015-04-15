@@ -68,6 +68,8 @@
 // ADVERTISMENT
 -(void) showAdvertisment:(ADInterstitialAd*)theAd;
 
+// TAP FOR TAP ADVERTISMENT
+- (void) tapForTapShowInterstitialBreak;
 
 // SCORE
 -(void) reportScore:(int)score forLeaderboardID: (NSString*) identifier;

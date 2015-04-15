@@ -5,6 +5,7 @@
 
 
 
+
 #import <Foundation/Foundation.h>
 #import "Retronator.Xni.Framework.Media.h"
 #import "Namespace.XniGame.classes.h"
@@ -12,7 +13,6 @@
 #import "GameState.h"
 #import "TouchPanel.h"
 #import "GameKitHelper.h"
-#import <iAd/iAd.h>
 
 #import "Retronator.Xni.Framework.h"
 
@@ -131,6 +131,8 @@
 @property (nonatomic, readonly) NSError* lastError;
 
 - (void) mainMenuButtonFix;
+
+
 
 // POWERUP GAME MECHANICS
 - (void) resetGameData;

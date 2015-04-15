@@ -13,6 +13,7 @@
 
 #import <iAd/iAd.h>
 
+#import "TapForTap.framework/Headers/TFTTapForTap.h"
 
 
 @implementation Igra
@@ -27,7 +28,12 @@
 		stateStack = [[NSMutableArray alloc] init];
         
         
+        // TapForTap - advertisment
+        [TFTTapForTap initializeWithAPIKey: @"3d323e6d58c83e06dba2547ec54f8afc"];
+        
 
+        
+        
         
         // iAD - LOAD NEW ADVERTISMENT
         @try
