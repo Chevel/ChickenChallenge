@@ -205,6 +205,14 @@ static GameKitHelper *sharedHelper = nil;
 //
 // TapForTap Ad
 //
+- (void) tapForTapShowBanner
+{
+    
+    bannerAd = [TFTBanner bannerWithFrame:CGRectMake(0, (gameViewController.gameView.frame.size.height - 50),  gameViewController.gameView.frame.size.width, 50) delegate:nil];
+    
+    [gameWindow.gameViewController.view addSubview:bannerAd];
+}
+
 - (void) tapForTapShowInterstitialBreak
 {
 
@@ -214,6 +222,13 @@ static GameKitHelper *sharedHelper = nil;
         NSLog(@"Ad failed: %@", reason);
     } onAdDidShow:nil onAdWasTapped:nil onAdWasDismissed:nil];
      
+}
+
+- (void) tapForTapCloseBanner
+{
+
+    [bannerAd removeFromSuperview];
+
 }
 
 //

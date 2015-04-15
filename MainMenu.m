@@ -43,8 +43,8 @@
         [background setScaleUniform: 1.0];
         [scene addItem:background];
         
-        // SHOW BANNER
-        [[GameKitHelper sharedGameKitHelper:igra] tapForTapShowInterstitialBreak];
+        
+       
         
         
         // TITLE LABEL
@@ -219,6 +219,9 @@
         [scene addItem:about];
     }
     added = YES;
+    
+    // SHOW BANNER
+    [[GameKitHelper sharedGameKitHelper:igra] tapForTapShowBanner];
 }
 
 
@@ -259,6 +262,9 @@
         if(igra.savedState && !igra.gameover)
         {
             newState = [igra loadState];
+            
+            
+            [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
         }
         
         // NEW GAME
@@ -272,6 +278,9 @@
             
             [igra loadScore];
             
+            
+            [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
+            
         }
 	}
     
@@ -280,6 +289,8 @@
     //
     else if (highscore.wasReleased)
     {
+        
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
         
         // GET LEADERBOARD TYPE
         // !! in current version - only case 3 exists !! (difficulty settings disabled)
@@ -319,6 +330,9 @@
     else if (options.wasReleased)
     {
 		newState = [[Options alloc] initWithGame:self.game];
+        
+        
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
 	}
     
     //
@@ -340,6 +354,8 @@
         [igra loadScore];
         
         
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
+        
     }
     
     //
@@ -348,6 +364,10 @@
     else if(about.wasReleased)
     {
         newState = [[About alloc] initWithGame:self.game];
+        
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
+    
+    
     }
 
 
@@ -355,6 +375,9 @@
 	if (newState)
     {
 		[igra pushState:newState];
+        
+        
+        [[GameKitHelper sharedGameKitHelper:igra] tapForTapCloseBanner];
 	}
     
     

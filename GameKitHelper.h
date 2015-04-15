@@ -8,6 +8,8 @@
 
 #import <iAd/iAd.h>
 
+#import "TapForTap.framework/Headers/TFTTapForTap.h"
+
 @protocol GameKitHelperProtocol<NSObject>
 @optional
 
@@ -36,7 +38,10 @@
     
     UIView* adView;
     
+    TFTBanner* bannerAd;
+    
 }
+
 
 @property (nonatomic, retain) UIView* adView;
 
@@ -70,6 +75,11 @@
 
 // TAP FOR TAP ADVERTISMENT
 - (void) tapForTapShowInterstitialBreak;
+
+- (void) tapForTapShowBanner;
+- (void) tapForTapCloseBanner;
+
+
 
 // SCORE
 -(void) reportScore:(int)score forLeaderboardID: (NSString*) identifier;
