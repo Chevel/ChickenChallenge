@@ -6,18 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Alien : Enemy {
-    
-    
-    NSTimeInterval startTime;
-    NSTimeInterval currentTime;
-
-    double age;
-    double onscreenTime;
-}
-
-@property double age;
-@property double onscreenTime;
+@interface Alien : Enemy 
 
 - (void) setScreenTime;
 

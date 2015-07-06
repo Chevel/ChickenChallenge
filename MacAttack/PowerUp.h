@@ -16,34 +16,25 @@
 #import "PowerUpType.h"
 #import "Lifetime.h"
 
-@interface PowerUp : GameComponent <ILifetime, IKillable, IMovable, IPowerUp, ITouchable>{
-    
-    
-    Vector2 *position;
-    
-    float size;
-	float width;
-	float height;
-    
-	PowerUpType type;
-    
-	NSTimeInterval duration; // how long the powerup stays active
-    Lifetime *lifetime;
-    
-	Boolean activated;
-    Boolean visible;
-    Boolean dead;
+@interface PowerUp : GameComponent <ILifetime, IKillable, IMovable, IPowerUp, ITouchable>
 
-	id<IScene> scene;
-    
-    Rectangle *inputArea;
-    
-	Matrix *inverseView;
-    
-    CGRect hitArea;
-}
+@property CGRect hitArea;
+@property float width;
+@property float height;
+@property Rectangle *inputArea;
+@property Matrix *inverseView;
+@property NSTimeInterval duration; // how long the powerup stays active
 
-- (PowerUpType) getType;
+@property BOOL activated;
+@property BOOL dead;
+@property (nonatomic) Vector2 *position;
+@property float rotation;
+@property (nonatomic, strong) Lifetime *lifetime;
+@property (nonatomic) PowerUpType type;
+@property BOOL zombie;
+@property BOOL visible;
+@property float size;
+
 
 - (id) initWithType:(PowerUpType)theType;
 - (id) initWithType:(PowerUpType)theType duration:(NSTimeInterval)theDuration;
@@ -52,15 +43,6 @@
 - (void) updateWithGameTime:(GameTime *)gameTime;
 
 
-@property CGRect hitArea;
-
-@property (nonatomic,readonly) PowerUpType type;
-@property (nonatomic,readonly) float width, height;
-@property (nonatomic) Lifetime *lifetime;
-
-@property Boolean activated;
-@property Boolean visible;
-@property Boolean dead;
 
 
 

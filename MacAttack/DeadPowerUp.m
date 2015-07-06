@@ -28,9 +28,9 @@
 - (void) activate {
 	[super activate];
     
-	activated = true;
-	dead = false;
-	visible = false;
+	self.activated = true;
+	self.dead = false;
+	self.visible = false;
 	
     
     
@@ -39,9 +39,9 @@
 - (void) deactivate {
     [super deactivate];
     
-    activated = false;
-	dead = true;
-	visible = false;
+    self.activated = false;
+	self.dead = true;
+	self.visible = false;
     
     reset = true;
 }
@@ -54,12 +54,10 @@
     
     reset = false;
     
-	if (lifetime) {
-		[lifetime updateWithGameTime:gameTime];
-		if (!lifetime.isAlive) {
-			lifetime = nil;
-			//[self deactivate]; //deactives + kills
-            
+	if (self.lifetime) {
+		[self.lifetime updateWithGameTime:gameTime];
+		if (!self.lifetime.isAlive) {
+			self.lifetime = nil;
 		}
 	}
     
@@ -72,13 +70,13 @@
 	for (TouchLocation *touch in touches)
     {
         
-        if(inverseView==nil){
+        if(self.inverseView==nil){
             NSLog(@"INV.VIEW NOT INIT - SLOWED POWERUP");
         }
-        Vector2* touchInScene = [Vector2 transform:touch.position with:inverseView];
+        Vector2* touchInScene = [Vector2 transform:touch.position with:self.inverseView];
         
         
-		if ([inputArea containsVector:touchInScene] && visible)
+		if ([self.inputArea containsVector:touchInScene] && self.visible)
         {
             touchesInInputArea = YES;
             touchPosition = touchInScene;
@@ -104,8 +102,8 @@
             }
         
             
-            if (duration) {
-                lifetime = [[Lifetime alloc] initWithStart:0 duration:duration];
+            if (self.duration) {
+                self.lifetime = [[Lifetime alloc] initWithStart:0 duration:self.duration];
             }
             
             

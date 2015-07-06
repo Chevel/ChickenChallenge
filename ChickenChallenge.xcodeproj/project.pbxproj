@@ -26,12 +26,9 @@
 		0304515B166527A800E5D7D7 /* Rectangle+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0304515A166527A800E5D7D7 /* Rectangle+Extensions.m */; };
 		03045162166527DC00E5D7D7 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 0304515F166527DC00E5D7D7 /* Gameplay.m */; };
 		03045163166527DC00E5D7D7 /* Igra.m in Sources */ = {isa = PBXBuildFile; fileRef = 03045161166527DC00E5D7D7 /* Igra.m */; };
-		03046EA41ADDF42F0054D44F /* iOS_Tutela_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03046EA31ADDF42F0054D44F /* iOS_Tutela_SDK.framework */; };
-		03046EA61ADDF4670054D44F /* KiipSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03046EA51ADDF4670054D44F /* KiipSDK.framework */; };
 		03046EA81ADDF4A10054D44F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03046EA71ADDF4A00054D44F /* Security.framework */; };
 		031FD978166573030039E1EC /* PowerUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 031FD977166573030039E1EC /* PowerUp.m */; };
 		032D6469168FB303000FD06D /* GameHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D6468168FB303000FD06D /* GameHud.m */; };
-		035C78761ADDA17A002136C3 /* TapForTap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035C78701ADDA17A002136C3 /* TapForTap.framework */; };
 		035C78791ADDA219002136C3 /* close-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 035C78771ADDA219002136C3 /* close-button.png */; };
 		035C787A1ADDA219002136C3 /* close-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035C78781ADDA219002136C3 /* close-button@2x.png */; };
 		035C78821ADDA421002136C3 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035C78811ADDA421002136C3 /* AVKit.framework */; };
@@ -344,9 +341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03046EA81ADDF4A10054D44F /* Security.framework in Frameworks */,
-				03046EA61ADDF4670054D44F /* KiipSDK.framework in Frameworks */,
-				035C78761ADDA17A002136C3 /* TapForTap.framework in Frameworks */,
-				03046EA41ADDF42F0054D44F /* iOS_Tutela_SDK.framework in Frameworks */,
 				035C78881ADDB074002136C3 /* Foundation.framework in Frameworks */,
 				035C78871ADDB02A002136C3 /* CoreLocation.framework in Frameworks */,
 				035C78821ADDA421002136C3 /* AVKit.framework in Frameworks */,

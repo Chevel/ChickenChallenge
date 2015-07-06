@@ -9,11 +9,7 @@
 #import "Enemy.h"
 
 
-@interface Airplane : Enemy {
-    
-
-}
-
+@interface Airplane : Enemy 
 
 
 @end

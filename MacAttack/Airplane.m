@@ -22,13 +22,13 @@
     self = [super init];
     if (self) {
 
-        worth = 5;
+        self.worth = 5;
         
-        size = 0.4;
-        width = 256 * size;
-        height = 256 * size;
+        self.size = 0.4;
+        self.width = 256 * self.size;
+        self.height = 256 * self.size;
         
-        hitArea = CGRectMake(position.x-(width/2), position.y-(height/2), width, height/2);
+        self.hitArea = CGRectMake(self.position.x-(self.width/2), self.position.y-(self.height/2), self.width, self.height/2);
     }
     
     return self;
@@ -41,7 +41,7 @@
 }
 
 - (void) moveCloser{
-    self.position.x += speed * 1.6;
+    self.position.x += self.speed * 1.6;
     self.position.y += 0.8;
     
 }
@@ -55,24 +55,22 @@
     while(insideScreen)
     {
         x = (120) + (arc4random() % (400)) * -1;
-        y = (0) + (arc4random() % ((int)screenHeight));
+        y = (0) + (arc4random() % ((int)[[UIScreen mainScreen] bounds].size.height));
         
         CGPoint spawnPoint = CGPointMake(x, y);
-        CGRect screen = CGRectMake(0, 0, screenWidth, screenHeight);
+        CGRect screen = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
         
         insideScreen = CGRectContainsPoint( screen,spawnPoint );
         
     }
     
     
-    position.x = x;
-    position.y = y;
+    [self.position setX:x];
+    [self.position setY:y];
     
-
-    dead = false;
-    respawn = false;
-    zombie = NO;
-    
+    [self setDead:NO];
+    [self setRespawn:NO];
+    [self setZombie:NO];
 }
 
 
@@ -86,13 +84,12 @@
     [super updateWithGameTime:gameTime];
     
     
-    
-    hitArea.origin.x = position.x-(width/2);
-    hitArea.origin.y = position.y-(height/2);
+//    self.hitArea.origin.x = self.position.x-(self.width/2);
+//    self.hitArea.origin.y = self.position.y-(self.height/2);
 
     
     // we kill enemies elsewhere, otherwise this would cause infinite respawn
-    if(!respawn && position.x > screenWidth+200){
+    if(!self.respawn && self.position.x > [[UIScreen mainScreen] bounds].size.width+200){
         [self setRespawn:true];
     }
     

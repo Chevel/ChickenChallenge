@@ -284,7 +284,7 @@ GAMEPLAY SHOULD HAVE
             if(igra.eggY < -50)
             {
                 [igra setOutro:NO]; 
-                [igra gameOver];
+                [igra setGameover:YES];
             }
         }
         
@@ -324,7 +324,7 @@ GAMEPLAY SHOULD HAVE
                     }
                     else
                     {
-                        [igra gameOver]; // <------- GOD MODE ON/OFF
+                        [igra setGameover:YES]; // <------- GOD MODE ON/OFF
                         
                         //[enemyTemp reincarnation];  // COMMENT WHEN DONE TESTING
                         
@@ -417,7 +417,7 @@ GAMEPLAY SHOULD HAVE
                 // FORCE FIELD
                 if( powerTemp.type == PowerUpTypeGoldenEgg )
                 {
-                    if(powerTemp.isActivated)
+                    if([powerTemp activated])
                     {
                         immortal = YES;
                     }
@@ -425,7 +425,7 @@ GAMEPLAY SHOULD HAVE
                 // SLOW
                 else if( powerTemp.type == PowerUpTypeSlow )
                 {
-                    if(powerTemp.isActivated)
+                    if([powerTemp activated] )
                     {
                         [igra setSlowed:YES];
                         
@@ -440,9 +440,9 @@ GAMEPLAY SHOULD HAVE
                 // DEAD
                 else if( powerTemp.type == PowerUpTypeDeath )
                 {
-                    if(powerTemp.isActivated)
+                    if([powerTemp activated])
                     {
-                        [igra gameOver];
+                        [igra setGameover:YES];
                     }
                 }
                 
@@ -450,7 +450,7 @@ GAMEPLAY SHOULD HAVE
                 
                 
                 // ZOMBIE POWERUP
-                if(powerTemp.isDead && !powerTemp.isActivated)
+                if([powerTemp dead] && ![powerTemp activated])
                 {
                     //
                     // POWERUP TIMEDOUT
@@ -487,7 +487,7 @@ GAMEPLAY SHOULD HAVE
                     }
                 }
                 // CURRENTLY ACTIVE
-                else if (powerTemp.isActivated)
+                else if ([powerTemp activated])
                 {
                     //NSLog(@" POWERUP ACTIVATED ");
                     // updates the lifetime of activation as well

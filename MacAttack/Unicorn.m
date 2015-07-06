@@ -19,13 +19,13 @@
     self = [super init];
     if (self) {
 
-        worth = 3;
+        self.worth = 3;
         
-        size = 0.4;  
-        width = 256 * size;
-        height = 256 * size;
+        self.size = 0.4;
+        self.width = 256 * self.size;
+        self.height = 256 * self.size;
         
-        hitArea = CGRectMake(position.x-width, position.y-height, width, height);
+        self.hitArea = CGRectMake(self.position.x-self.width, self.position.y-self.height, self.width, self.height);
     }
     
     return self;
@@ -60,6 +60,7 @@
     [self updateRotation];
     
     self.position.y+=sinus;
+    
 }
 
 - (void) reincarnation{
@@ -79,14 +80,12 @@
         insideScreen = CGRectContainsPoint( screen,spawnPoint );
     }
     
+    [self.position setX:x];
+    [self.position setY:y];
     
-    
-    position.x = x;
-    position.y = y;
-    
-    dead = false;
-    respawn = false;
-    zombie = NO;
+    [self setDead:NO];
+    [self setRespawn:NO];
+    [self setZombie:NO];
 }
 
 - (void) updateRotation{
@@ -97,7 +96,7 @@
     
     rotate = (float)atan2( distY, distX );
     
-    rotation = rotate - (M_PI);
+    self.rotation = rotate - (M_PI);
     
 }
 
@@ -112,7 +111,7 @@
     
     
     // we kill enemies elsewhere, otherwise this would cause infinite respawn
-    if(!respawn && position.x > screenWidth){
+    if(!self.respawn && self.position.x >  [[UIScreen mainScreen] bounds].size.width){
         [self setRespawn:true];
     }
     

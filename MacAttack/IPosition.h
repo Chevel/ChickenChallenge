@@ -22,8 +22,6 @@
 @property (nonatomic, retain) Rectangle *state;
 
 @property float rotation;
-@property int life;
-
 
 
 

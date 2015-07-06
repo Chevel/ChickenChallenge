@@ -8,38 +8,48 @@
 
 
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((float)(__ANGLE__) * 57.29577951f) // PI * 180
-//#define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
+
+@interface Enemy()
+
+@property Rectangle *inputArea;
+@property Matrix *inverseView;
+
+@property NSTimeInterval nowTime, timeOfDeath;
+@property BOOL startAnimation;
+
+@end
 
 
 @implementation Enemy
+
+
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        position = [[Vector2 alloc] init];
-        rotation = 0;
+        self.position = [[Vector2 alloc] init];
+        self.rotation = 0;
         
-        dead = FALSE;
-        zombie = false;
-        worth = 1;
+        _dead = NO;
+        _zombie = NO;
+        _worth = 1;
         
-        size = 1; // gets overriden in child
-		width = 256 * size;
-		height = 256 * size;
+        self.size = 1; // gets overriden in child
+		_width = 256 * self.size;
+		_height = 256 * self.size;
         
-        hitArea = CGRectMake(position.x-width, position.y-height, width, height);
+        _hitArea = CGRectMake(self.position.x - _width, self.position.y - _height, _width, _height);
         
-        respawn = false;
+        _respawn = NO;
     }
     
     
-    touchPanel = [TouchPanel getInstance];
     
-    inputArea = [[Rectangle alloc] initWithX:0
+    _inputArea = [[Rectangle alloc] initWithX:0
                                            y:0
-                                       width:touchPanel.displayWidth
-                                      height:touchPanel.displayHeight
+                                       width:[TouchPanel getInstance].displayWidth
+                                      height:[TouchPanel getInstance].displayHeight
                  ];
     
     
@@ -49,35 +59,28 @@
 
 
 
-@synthesize position, rotation, dead, speed, size, worth,zombie, deadTime, timeOfDeath, width, height, hitArea, respawn, nowTime;
-    
-
-- (BOOL) isDead{
-    return dead;
-}
-
 - (void) updateRotation{
     
     
-    float distX = self.position.x - (screenWidth/2); 
-    float distY = self.position.y - (screenHeight/2); 
+    float distX = self.position.x - ([[UIScreen mainScreen] bounds].size.width/2);
+    float distY = self.position.y - ([[UIScreen mainScreen] bounds].size.height/2);
     float rotate=0;
     
     rotate = (float)atan2(distY, distX);
     
-    rotation = rotate - (M_PI);
+    self.rotation = rotate - (M_PI);
     
     
     
 }
 
 - (void) kill{
-    dead = TRUE;
-    timeOfDeath = [[NSDate date] timeIntervalSince1970];
+    _dead = TRUE;
+    _timeOfDeath = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void) setCamera:(Matrix *)camera {
-    inverseView = [Matrix invert:camera];
+    _inverseView = [Matrix invert:camera];
 }
 
 - (BOOL) containsVector:(Vector2 *) touchPoz {
@@ -93,9 +96,6 @@
     return (dist < 50);
 }
 
-- (BOOL) isZombie{
-    return zombie;
-}
 
 
 
@@ -112,12 +112,12 @@
     for (TouchLocation *touch in touches)
     {
         
-        if(inverseView==nil){
+        if(_inverseView==nil){
             NSLog(@"INVERSE VIEW NOT INITIALIZED");
         }
-        Vector2* touchInScene = [Vector2 transform:touch.position with:inverseView];
+        Vector2* touchInScene = [Vector2 transform:touch.position with:_inverseView];
         
-        if ([inputArea containsVector:touchInScene])
+        if ([_inputArea containsVector:touchInScene])
         {
             touchesInInputArea = YES;
             touchPosition = touchInScene;
@@ -127,7 +127,7 @@
     if (touchesInInputArea)
     {
         
-        if([self containsVector:touchPosition] && ![self isDead] && ![self isZombie] ){
+        if([self containsVector:touchPosition] && ![self dead] && ![self zombie] ){
             
            // NSLog(@" KILL ");
             
@@ -138,15 +138,15 @@
     
     
     
-    hitArea.origin.x = position.x - width/2;
-    hitArea.origin.y = position.y - height/2;
+    _hitArea.origin.x = self.position.x - _width/2;
+    _hitArea.origin.y = self.position.y - _height/2;
     
     
     //NSLog(@"X=%f, Y=%f\n", hitArea.origin.x, hitArea.origin.y);
     
-    nowTime = [[NSDate date] timeIntervalSince1970];
+    _nowTime = [[NSDate date] timeIntervalSince1970];
     
-    deadTime = fabs(timeOfDeath-nowTime);
+    _deadTime = fabs(_timeOfDeath - _nowTime);
     
 
 }
@@ -158,7 +158,6 @@
 /*
 - (void) moveCloser{}
 - (void) reincarnation{}
-- (BOOL) atCenter{}
 */
 
 

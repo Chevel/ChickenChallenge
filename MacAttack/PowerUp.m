@@ -11,33 +11,40 @@
 #import "Namespace.XniGame.classes.h"
 
 
+@interface PowerUp()
+
+
+@end
+
+
+
 @implementation PowerUp
 
 
 
-- (id) initWithType:(PowerUpType)theType duration:(NSTimeInterval)theDuration;{
+- (id) initWithType:(PowerUpType)theType duration:(NSTimeInterval)theDuration{
 
         TouchPanel *touchPanel = [TouchPanel getInstance];
-        inputArea = [[Rectangle alloc] initWithX:0
+        _inputArea = [[Rectangle alloc] initWithX:0
                                                y:0
                                            width:touchPanel.displayWidth
                                           height:touchPanel.displayHeight
                      ];
         
-        activated = false;
-        dead = false;
-        visible = true;
+        self.activated = NO;
+        self.dead = NO;
+        self.visible = YES;
         
         [self spawn];
     
-        size = 0.6;
-		width = 128 * size;
-		height = 256 * size;
+        self.size = 0.6;
+		self.width = 128 * self.size;
+		self.height = 256 * self.size;
     
-		type = theType;
-		duration = theDuration;
+		self.type = theType;
+		_duration = theDuration;
     
-        hitArea = CGRectMake(position.x-width/2, position.y-height/2, width, height);
+        _hitArea = CGRectMake(self.position.x-self.width/2, self.position.y-self.height/2, self.width, self.height);
     
 	
 	return self;
@@ -45,7 +52,7 @@
 
 
 
-@synthesize position, size, width, height, type, lifetime, rotation, dead, visible, activated, hitArea;
+//@synthesize position, size, width, height, type, lifetime, rotation, dead, visible, activated, hitArea;
 
 
 - (BOOL) containsVector:(Vector2 *) touchPoz {
@@ -62,7 +69,7 @@
     CGPoint touch = CGPointMake(touchPoz.x,touchPoz.y);
 
 
-    return CGRectContainsPoint( hitArea,touch );
+    return CGRectContainsPoint( _hitArea,touch );
     
 }
 
@@ -72,27 +79,21 @@
     self.visible = false;
 }
 
-- (BOOL) isDead{
-    return dead;
-}
 
-- (BOOL) isActivated{
-    return activated;
-}
 
 - (void) moveCloser{
    self.position.y += 1.7;  // 1 = OK
 }
 
 - (BOOL) outOfBounds{
-    if(self.position.y > screenHeight+height){
+    if(self.position.y > screenHeight+_height){
         return true;
     }
     return false;
 }
 
 - (void) spawn{
-    int x = width + (random() % ((int)screenWidth)-width);
+    int x = _width + (random() % ((int)screenWidth)-_width);
     int y = (5 + (random() % 50)) * -1;
 
     
@@ -103,7 +104,7 @@
         x += 128;
     }
     
-    position = [[Vector2 alloc] initWithX:x y:y];
+    self.position = [[Vector2 alloc] initWithX:x y:y];
 }
 
 - (void) activate{
@@ -115,23 +116,16 @@
 }
 
 - (void) setCamera:(Matrix *)camera {
-	inverseView = [Matrix invert:camera];
+	_inverseView = [Matrix invert:camera];
 }
-
-
-- (PowerUpType) getType{
-    return self.type;
-}
-
-
 
 
 
 - (void) updateWithGameTime:(GameTime*)gameTime{
     
     
-    hitArea.origin.x = position.x - (width/2);
-    hitArea.origin.y = position.y - (height/2);
+    _hitArea.origin.x = self.position.x - (_width/2);
+    _hitArea.origin.y = self.position.y - (_height/2);
     
     // OUT OF SCREEN = DEAD
     if( [self outOfBounds] ){

@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-//#import "Express.Scene.Objects.classes.h" // ORIGINAL
-#import "Namespace.XniGame.h" // TEST
+#import "Namespace.XniGame.h"
 
 
 @protocol ILifetime <NSObject>
 
-@property (nonatomic, retain) Lifetime *lifetime;
+@property (nonatomic, strong) Lifetime *lifetime;
 
 @end

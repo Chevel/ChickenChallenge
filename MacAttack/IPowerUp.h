@@ -9,19 +9,15 @@
 
 
 // VARIABLES
-@property Boolean activated;
-@property Boolean visible;
-@property int size;
+@property BOOL activated;
+@property BOOL visible;
+@property (nonatomic) PowerUpType type;
 
 
 
 // METHODS
 
 - (void) activate;
-
-- (PowerUpType) getType;
-
-- (BOOL) isActivated;
 
 - (void) reincarnation;
 

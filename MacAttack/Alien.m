@@ -7,7 +7,18 @@
 
 
 
+@interface Alien()
 
+
+@property double age;
+@property double onscreenTime;
+
+
+@property NSTimeInterval startTime;
+@property NSTimeInterval currentTime;
+
+
+@end
 
 
 
@@ -22,17 +33,17 @@
     self = [super init];
     if (self) {
         
-        worth = 10;
+        self.worth = 10;
         
-        size = 0.5;
-        width = 256 * size;
-        height = 256 * size;
+        self.size = 0.5;
+        self.width = 256 * self.size;
+        self.height = 256 * self.size;
         
-        hitArea = CGRectMake(position.x-((width*size)/2), position.y-((height*size)/2), width, height);
+        self.hitArea = CGRectMake(self.position.x-((self.width*self.size)/2), self.position.y-((self.height*self.size)/2), self.width, self.height);
         
-        age = 0.0;
-        startTime = 0.0;
-        currentTime = [[NSDate date] timeIntervalSince1970];
+        _age = 0.0;
+        _startTime = 0.0;
+        _currentTime = [[NSDate date] timeIntervalSince1970];
         
 
     }
@@ -40,12 +51,8 @@
     return self;
 }
 - (void) setScreenTime{
-    onscreenTime = 0.5;
+    _onscreenTime = 0.5;
 }
-
-
-@synthesize age, onscreenTime;
-
 
 - (void) kill{
     [super kill];
@@ -59,20 +66,20 @@
 
 - (void) reincarnation{
     
-    if([self timedout] || dead){
+    if([self timedout] || [self dead]){
         // RANDOM SPAWN POINT OUTSIDE OF SCREEN
         int x,y;
         Boolean insideScreen = true;
         while( insideScreen )
         {
-            x = (120) + (arc4random() % ((int)screenWidth-240));
+            x = (120) + (arc4random() % ((int)[[UIScreen mainScreen] bounds].size.width-240));
             
-            y = (120) + (arc4random() % ((int)screenHeight-240));
+            y = (120) + (arc4random() % ((int)[[UIScreen mainScreen] bounds].size.height-240));
             
             
             CGPoint spawnPoint = CGPointMake(x, y);
-            CGRect screen = CGRectMake(0, 0, screenWidth, screenHeight);
-            CGRect eggArea = CGRectMake( (screenWidth/2)-100, (screenHeight/2)-50, 200, 100);
+            CGRect screen = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+            CGRect eggArea = CGRectMake( ([[UIScreen mainScreen] bounds].size.width/2)-100, ([[UIScreen mainScreen] bounds].size.height/2)-50, 200, 100);
             
             // ALIEN MUST NOT BE OUTSIDE OF SCREEN or INSIDE OF EGG AREA
             insideScreen = CGRectContainsPoint( screen,spawnPoint ) || CGRectContainsPoint( eggArea,spawnPoint );
@@ -83,20 +90,21 @@
         }
         
         
-        position.x = x;
-        position.y = y;
         
-        dead = false;
-        respawn = false;
-        zombie = NO;
+        [self.position setX:x];
+        [self.position setY:y];
         
-        startTime = [[NSDate date] timeIntervalSince1970];
+        [self setDead:NO];
+        [self setRespawn:NO];
+        [self setZombie:NO];
+        
+        _startTime = [[NSDate date] timeIntervalSince1970];
     }
     
 }
 
 - (BOOL) timedout{
-    return (age >= onscreenTime);
+    return (_age >= _onscreenTime);
 }
 
 
@@ -112,8 +120,8 @@
     [super updateWithGameTime:gameTime];
 
     
-    currentTime = [[NSDate date] timeIntervalSince1970];
-    age = fabs(startTime-currentTime);
+    _currentTime = [[NSDate date] timeIntervalSince1970];
+    _age = fabs(_startTime - _currentTime);
 }
 
 

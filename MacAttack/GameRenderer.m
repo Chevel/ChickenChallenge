@@ -528,13 +528,13 @@
                 //
                 else if ([item isKindOfClass:[PowerUp class]]){
                     
-                    if( ((PowerUp*)item).getType == PowerUpTypeGoldenEgg ){
+                    if( [((PowerUp*)item) type] == PowerUpTypeGoldenEgg ){
                          sprite = [[powerUps getPowerUp:PowerUpTypeGoldenEgg] spriteAtTime:gameTime.totalGameTime];
                     }
-                    if( ((PowerUp*)item).getType == PowerUpTypeSlow ){
+                    if( [((PowerUp*)item) type] == PowerUpTypeSlow ){
                          sprite = [[powerUps getPowerUp:PowerUpTypeSlow] spriteAtTime:gameTime.totalGameTime];
                     }
-                   if( ((PowerUp*)item).getType == PowerUpTypeDeath ){
+                   if( [((PowerUp*)item) type] == PowerUpTypeDeath ){
                          sprite = [[powerUps getPowerUp:PowerUpTypeDeath] spriteAtTime:gameTime.totalGameTime];
                     }
                 }
@@ -547,7 +547,7 @@
                 {
                     
                     // GOD POWERUP ANIMATION
-                    if( [itemPowerUp getType] == PowerUpTypeGoldenEgg  && [itemPowerUp isActivated] ){
+                    if( [itemPowerUp type] == PowerUpTypeGoldenEgg  && [itemPowerUp activated] ){
                         
                         // FORCE FIELD - BLINKING VFX
                         float perc = ((Lifetime*)[itemPowerUp lifetime]).percentage;
@@ -563,7 +563,7 @@
                     
                     
                     // DEATH POWERUP ANIMATION - BLINKING VFX
-                    if( [itemPowerUp getType] == PowerUpTypeDeath  && [itemPowerUp isActivated] )
+                    if( [itemPowerUp type] == PowerUpTypeDeath  && [itemPowerUp activated] )
                     {
                         
                         if(deathAnimationStart)
@@ -600,7 +600,7 @@
                     }
                     
                     // FREE FALLING ANIMATION
-                    if( ![itemPowerUp isActivated] && [itemPowerUp visible] ){
+                    if( ![itemPowerUp activated] && [itemPowerUp visible] ){
                         [spriteBatch draw:sprite.texture
                                        to:itemPowerUp.position
                             fromRectangle:sprite.sourceRectangle
@@ -620,7 +620,7 @@
                 //
                 // ITEM IS ENEMY ALIVE
                 //
-                if(itemWithLife && sprite && [itemWithLife isDead]==false) {
+                if(itemWithLife && sprite && [itemWithLife dead]==false) {
                     [spriteBatch draw:sprite.texture
                                    to: itemWithLife.position
                         fromRectangle:sprite.sourceRectangle
@@ -638,7 +638,7 @@
                 //
                 //ITEM IS ENEMY DEAD
                 //
-                if(itemWithLife && sprite && [itemWithLife isZombie]==true) {
+                if(itemWithLife && sprite && [itemWithLife zombie]==true) {
                     Vector2 *tmp = itemWithLife.position;
                     
                     int type;

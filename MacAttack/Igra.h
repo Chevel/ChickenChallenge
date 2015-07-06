@@ -22,113 +22,93 @@
 
 @interface Igra : Game{
     
-    // GRAPHICS
-    GraphicsDeviceManager *graphics;
-    
-    // TABLE OF LEVELS
-    NSMutableArray *levelClasses;
+//    // GRAPHICS
+//    GraphicsDeviceManager *graphics;
+//    
 
-    // GAME STATE
-    NSMutableArray *stateStack;
-    GameState *savedState;
-    
-    // GAME DATA
-    int stage;
-	int score;
-    int bestScore;
-    float backgroundProgress;  //y value for background rectangle, save position of spritebatch
-    BOOL gameover;
-    BOOL stop;
-    BOOL active;
-    int speed;
-    
-    // iAD
-    BOOL showAd;
-    BOOL adAvailable;
-    
-    int difficulty;
-    int easy,medium,hard;
-    
-    // EASTER EGG
-    int eggPop;
-    BOOL easterEgg;
-    
-    // TOUCHY
-    TouchPanel *touchPanel;
-    Matrix *inverseView;
-    Matrix *camera;
-    Vector2 *position;
-    Rectangle *inputArea;
-	BOOL grabbed;
-    
-    // MUSIC
-    MediaPlayer *mp;
-    Song *song;
-    BOOL sfx;
-    
-    BOOL introStart, gameoverDeathStart;
-    BOOL intro, outro;
-    float eggY;
-    BOOL first;
-    
-    BOOL scoreReported;
-    BOOL scoreWasChecked;
-    int prevBest;
-    
-    // GAME MODE
-    BOOL freeplayUnlocked;
-    BOOL freeplayActive;
+//
+//    // GAME STATE
+//    GameState *savedState;
+//    
+//    // GAME DATA
+//    int stage;
+//	int score;
+//    int bestScore;
+//    float backgroundProgress;  //y value for background rectangle, save position of spritebatch
+//    BOOL gameover;
+//    BOOL stop;
+//    BOOL active;
+//    int speed;
+//    
+//    // iAD
+//    BOOL showAd;
+//    BOOL adAvailable;
+//    
+//    int difficulty;
+//    int easy,medium,hard;
+//    
+//    // EASTER EGG
+//    int eggPop;
+//    BOOL easterEgg;
+//    
+//    // TOUCHY
+//    TouchPanel *touchPanel;
+//    Matrix *inverseView;
+//    Matrix *camera;
+//    Vector2 *position;
+//    Rectangle *inputArea;
+//	BOOL grabbed;
+//    
+//    // MUSIC
+//    MediaPlayer *mp;
+//    Song *song;
+//    BOOL sfx;
+//    
+//    BOOL introStart, gameoverDeathStart;
+//    BOOL intro, outro;
+//    float eggY;
+//    BOOL first;
+//    
+//    BOOL scoreReported;
+//    BOOL scoreWasChecked;
+//    int prevBest;
+//    
+//    // GAME MODE
+//    BOOL freeplayUnlocked;
+//    BOOL freeplayActive;
 }
+
+// iAD ADVERTISMENT
+@property BOOL scoreReported;
+@property (nonatomic) ADInterstitialAd* interstitial;
+
+
+// GAME DATA
+@property float backgroundProgress;
+@property BOOL intro, introStart;
+@property BOOL easterEgg;
+@property float eggY;
+@property BOOL stop;
+@property BOOL active;
+@property (nonatomic) int stage;
+@property BOOL freeplayActive;
+@property BOOL outro;
+@property int difficulty;
+@property int score;
+@property BOOL gameover;
+@property BOOL freeplayUnlocked;  // gameplay
+@property (nonatomic, strong) GameState *savedState;
+@property int bestScore;
+
+
+// SOUND STUFF
+@property (strong) MediaPlayer *mp;
+@property BOOL sfx;
 
 
 
 // POWERUP
 @property BOOL slowed;
-
-//iAd ADVERTISMENT
-@property BOOL adAvailable;
-@property ADInterstitialAd* interstitial;
-@property BOOL showAd;
-
-@property BOOL scoreWasChecked;
-@property BOOL scoreReported;
-
-// SOUND STUFF
-@property (strong) GameKitHelper *gkHelper;
-@property (strong) MediaPlayer *mp;
-@property (strong) Song *song;
-@property BOOL sfx;
-
-// GAME DATA
-@property float eggY;
-@property BOOL intro, outro, introStart, gameoverDeathStart;
-
-@property int difficulty;
-@property int easy,medium,hard;
-
-@property (nonatomic) float flappingSpeed;
-@property (nonatomic) int score, bestScore, stage;
-@property (nonatomic) float backgroundProgress;
-@property BOOL active;
-
-
-@property int eggPop;
-@property BOOL easterEgg;  // to display easter egg
-
-@property BOOL freeplayUnlocked;  // gameplay
-@property BOOL freeplayActive;
-
-@property BOOL gameover;
-@property BOOL stop;
-@property (nonatomic, strong) GameState *savedState;
-
-// STUFF
-@property (nonatomic, readonly) Matrix *camera;
-@property (nonatomic, readonly) GraphicsDeviceManager *graphics;
-@property int prevBest;
-
-
-@property (nonatomic, readonly) NSError* lastError;
 
 - (void) mainMenuButtonFix;
 
@@ -148,7 +128,6 @@
 - (GameState *) loadState;
 
 // GAME MECHANICS
-- (void) gameOver;
 - (void) stageUP;
 - (void) reset;
 - (void) restart;

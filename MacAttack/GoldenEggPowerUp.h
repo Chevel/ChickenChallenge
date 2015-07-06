@@ -10,13 +10,10 @@
 
 #import "PowerUp.h"
 
-@interface GoldenEggPowerUp : PowerUp {
-	
-    BOOL reset;
-    
-}
+@interface GoldenEggPowerUp : PowerUp
 
 @property BOOL reset;
+
 
 @end
 

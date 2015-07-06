@@ -13,7 +13,46 @@
 
 #import <iAd/iAd.h>
 
-#import "TapForTap.framework/Headers/TFTTapForTap.h"
+
+@interface Igra()
+
+
+
+//iAd ADVERTISMENT
+@property BOOL adAvailable;
+@property BOOL showAd;
+@property BOOL scoreWasChecked;
+
+// SOUND STUFF
+@property (strong) GameKitHelper *gkHelper;
+@property (strong) Song *song;
+
+// GAME DATA
+@property BOOL gameoverDeathStart;
+@property int easy,medium,hard;
+@property (nonatomic) float flappingSpeed;
+@property int eggPop;
+
+// STUFF
+@property (nonatomic, readonly) Matrix *camera;
+@property (nonatomic, readonly) GraphicsDeviceManager *graphics;
+@property int prevBest;
+@property (nonatomic, readonly) NSError* lastError;
+
+// GAME STATE
+@property (nonatomic, strong) NSMutableArray *stateStack;
+
+// TABLE OF LEVELS
+@property (nonatomic, strong) NSMutableArray *levelClasses;
+
+// TOUCHY
+@property (nonatomic, strong) TouchPanel *touchPanel;
+@property Rectangle *inputArea;
+@property Matrix *inverseView;
+
+
+
+@end
 
 
 @implementation Igra
@@ -21,15 +60,12 @@
 - (id)init {
     if (self = [super init]) {
         
-        graphics = [[GraphicsDeviceManager alloc] initWithGame:self];
+        _graphics = [[GraphicsDeviceManager alloc] initWithGame:self];
         
 		[self.components addComponent:[[TouchPanelHelper alloc] initWithGame:self]];
         
-		stateStack = [[NSMutableArray alloc] init];
+		_stateStack = [[NSMutableArray alloc] init];
         
-        
-        // TapForTap - advertisment
-        [TFTTapForTap initializeWithAPIKey: @"3d323e6d58c83e06dba2547ec54f8afc"];
         
 
         
@@ -38,13 +74,13 @@
         // iAD - LOAD NEW ADVERTISMENT
         @try
         {
-            interstitial = [[ADInterstitialAd alloc] init];
-            interstitial.delegate = [GameKitHelper sharedGameKitHelper:self];
+            _interstitial = [[ADInterstitialAd alloc] init];
+            _interstitial.delegate = [GameKitHelper sharedGameKitHelper:self];
         }
         @catch (NSException *exception)
         {
             //[[GameKitHelper sharedGameKitHelper:self] setAdAvailable:NO];
-            adAvailable = NO;
+            _adAvailable = NO;
         }
 
         
@@ -55,53 +91,53 @@
         */
         
         
-        freeplayActive = NO;  // currentLeaderboard reads this value
+        _freeplayActive = NO;  // currentLeaderboard reads this value
         
         //
         // LOAD HIGHSCORE
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
-        [self setBestScore:[bestScoreSaved integerValue]];
+        NSNumber *_bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
+        [self setBestScore:[_bestScoreSaved integerValue]];
         
         
         //
         // GAME DATA
         //
-        easy = 1;
-        medium = 2;
-        hard = 3;
+        _easy = 1;
+        _medium = 2;
+        _hard = 3;
         
-        intro = YES;
-        outro = NO;
+        _intro = YES;
+        _outro = NO;
         
-        difficulty = hard;
-        savedState = nil;
+        _difficulty = _hard;
+        _savedState = nil;
         
-        stage = 0;
-		score = 0;
-		backgroundProgress = 3470; //3150 = start game position;  3470 = intro position
+        _stage = 0;
+		_score = 0;
+		_backgroundProgress = 3470; //3150 = start game position;  3470 = _intro position
         
-        gameover = NO;
-        active = NO;
+        _gameover = NO;
+        _active = NO;
         
-        eggPop = 0;
+        _eggPop = 0;
         
-        scoreWasChecked = NO;
-        scoreReported = NO;
-        introStart = YES;
-        stop = NO;
+        _scoreWasChecked = NO;
+        _scoreReported = NO;
+        _introStart = YES;
+        _stop = NO;
         
-        freeplayUnlocked = [[defaults objectForKey:@"freeplay"] integerValue] == 1 ? YES : NO;
+        _freeplayUnlocked = [[defaults objectForKey:@"freeplay"] integerValue] == 1 ? YES : NO;
         
         // TESTING PURPOSE
-        //freeplayUnlocked = NO;
+        //_freeplayUnlocked = NO;
         
         
 
         
-        gameoverDeathStart = NO;
+        _gameoverDeathStart = NO;
 
-        easterEgg = NO;
+        _easterEgg = NO;
         
         
         
@@ -111,11 +147,11 @@
         NSInteger month = [components month];
         if( (month >= 3 && day > 22) && (month <= 4 && day < 25) )
         {
-            easterEgg = YES;
+            _easterEgg = YES;
         }
         else
         {
-            easterEgg = NO;
+            _easterEgg = NO;
         }
         
         
@@ -123,40 +159,31 @@
     return self;
 }
 
-@synthesize interstitial, showAd, adAvailable;
-@synthesize prevBest, scoreReported, scoreWasChecked;
-@synthesize graphics, savedState, backgroundProgress, stage, camera;
-@synthesize mp, song;
-@synthesize easy, medium, hard;
-@synthesize score, bestScore, gameover, eggPop, easterEgg, active, difficulty, sfx, intro, outro, introStart, gameoverDeathStart, eggY, stop;
-@synthesize slowed;
-@synthesize freeplayUnlocked, freeplayActive;
-
 
 -(void) initialize{
     
     // POWERUP
-    slowed = NO;
+    _slowed = NO;
     
     // INIT SOUND
-    song = [self.content load:@"DST-GameOn"];
-    mp = [MediaPlayer getInstance];
-    mp.isRepeating = true;
-    mp.volume = 0.1; // MUSIC VOLUME
-    [mp playSong:song];
+    _song = [self.content load:@"DST-GameOn"];
+    _mp = [MediaPlayer getInstance];
+    _mp.isRepeating = true;
+    _mp.volume = 0.1; // MUSIC VOLUME
+    [_mp playSong:_song];
     
     
     
-    // SFX
-    sfx = true;
+    // _sfx
+    _sfx = true;
     
     // ADD LEVEL
-	levelClasses = [[NSMutableArray alloc] init];
-	[levelClasses addObject:[Level1 class]];
+	_levelClasses = [[NSMutableArray alloc] init];
+	[_levelClasses addObject:[Level1 class]];
     
     // CONTINUE
-    if(savedState != nil){
-        [self pushState:savedState];
+    if(_savedState != nil){
+        [self pushState:_savedState];
     }
     // NEW GAME - MAIN MENU
     else{
@@ -174,9 +201,9 @@
     
 
     
-    touchPanel = [TouchPanel getInstance];
+    _touchPanel = [TouchPanel getInstance];
     
-    inputArea = [[Rectangle alloc] initWithX:0
+    _inputArea = [[Rectangle alloc] initWithX:0
                                            y:0
                                        width:screenWidth
                                       height:screenHeight
@@ -198,15 +225,15 @@
         scaleX = 1;
         scaleY = 1;
     }
-    camera = [Matrix createScale:[Vector3 vectorWithX:scaleX
+    _camera = [Matrix createScale:[Vector3 vectorWithX:scaleX
                                                     y:scaleY
                                                     z:1]
               ];
     
     
-    [self setCamera:camera];
+    [self setCamera:_camera];
     
-    eggY = (screenHeight - 35); // egg on screen
+    _eggY = (screenHeight - 35); // egg on screen
     
     
     
@@ -225,15 +252,15 @@
     //    NSLog(@"\n PUSH = %@", gameState);
     
     
-	GameState *currentActiveState = [stateStack lastObject];
-	[currentActiveState deactivate];
-	[self.components removeComponent:currentActiveState];
+	GameState *current_activeState = [_stateStack lastObject];
+	[current_activeState deactivate];
+	[self.components removeComponent:current_activeState];
     
 
     //[gameState initialize];
     
 
-	[stateStack addObject:gameState];
+	[_stateStack addObject:gameState];
 	[self.components addComponent:gameState];
 	[gameState activate];
     
@@ -241,29 +268,29 @@
     
     /*
         NSLog(@"\n------------------------");
-        NSLog(@"\n ACTIVE = %@, \n COUNT = %d \n STACK = %d", gameState, [self.components count], [stateStack count]);
+        NSLog(@"\n _active = %@, \n COUNT = %d \n STACK = %d", gameState, [self.components count], [stateStack count]);
         NSLog(@"\n------------------------");
      */
 }
 
 - (void) popState {
     
-	GameState *currentActiveState = [stateStack lastObject];
-	[stateStack removeLastObject];
-	[currentActiveState deactivate];
-	[self.components removeComponent:currentActiveState];
+	GameState *current_activeState = [_stateStack lastObject];
+	[_stateStack removeLastObject];
+	[current_activeState deactivate];
+	[self.components removeComponent:current_activeState];
     
  
-	   // NSLog(@" POP = %@", currentActiveState);
+	   // NSLog(@" POP = %@", current_activeState);
     
     
-	currentActiveState = [stateStack lastObject];
-	[self.components addComponent:currentActiveState];
-	[currentActiveState activate];
+	current_activeState = [_stateStack lastObject];
+	[self.components addComponent:current_activeState];
+	[current_activeState activate];
     
 /*
     NSLog(@"\n------------------------");
-    NSLog(@"\n ACTIVE = %@, \n COUNT = %d \n STACK = %d", currentActiveState, [self.components count], [stateStack count]);
+    NSLog(@"\n _active = %@, \n COUNT = %d \n STACK = %d", current_activeState, [self.components count], [stateStack count]);
     NSLog(@"\n------------------------");
 */
     
@@ -271,32 +298,28 @@
 
 - (void) saveState {
     GameState *curentStateCopy = [[GameState alloc] initWithGame:self];
-    curentStateCopy = [stateStack lastObject];
+    curentStateCopy = [_stateStack lastObject];
     
-    self.savedState = curentStateCopy;
+    _savedState = curentStateCopy;
 }
 
 - (GameState *) loadState{
-    return self.savedState;
+    return _savedState;
 }
 
 - (GameState *) getState{
-    return (GameState *)[stateStack lastObject];
+    return (GameState *)[_stateStack lastObject];
 }
 
 - (Class) getLevelClass:(int) which {
-	return [levelClasses objectAtIndex:which];
+	return [_levelClasses objectAtIndex:which];
 }
 
 
 // GAMEPLAY
 - (void) stageUP{
-    self.stage+=1;
-    //NSLog(@"STAGE UP - stage=%d",self.stage);
-}
-
-- (void) gameOver{
-    gameover = true;
+    _stage+=1;
+    //NSLog(@"_stage UP - _stage=%d",self._stage);
 }
 
 
@@ -308,16 +331,16 @@
     
     
     
-    if(score > bestScore)
+    if(_score > _bestScore)
     {
-        score = bestScore;
+        _score = _bestScore;
         
         // UPDATE HIGHSCORE
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
-        [self setBestScore:[bestScoreSaved integerValue]];
+        NSNumber *_bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
+        [self setBestScore:[_bestScoreSaved integerValue]];
     }
-    prevBest = bestScore;
+    _prevBest = _bestScore;
     
     
     // EASTER EGG CHECK
@@ -326,10 +349,10 @@
     NSInteger month = [components month];
     if( (month >= 3 && day > 22) && (month <= 4 && day < 25) )
     {
-        easterEgg = YES;
+        _easterEgg = YES;
     }
     else{
-        easterEgg = NO;
+        _easterEgg = NO;
     }
     
 
@@ -338,33 +361,33 @@
     //
     // GAME DATA
     //
-    easy = 1;
-    medium = 2;
-    hard = 3;
+    _easy = 1;
+    _medium = 2;
+    _hard = 3;
     
     
-    outro = NO;
+    _outro = NO;
     
-    difficulty = hard;
-    savedState = nil;
+    _difficulty = _hard;
+    _savedState = nil;
     
-    stage = 0;
-    score = 0;
+    _stage = 0;
+    _score = 0;
     
     
-    gameover = NO;
-    active = NO;
+    _gameover = NO;
+    _active = NO;
     
-    eggPop = 0;
+    _eggPop = 0;
     
-    scoreWasChecked = NO;
-    scoreReported = NO;
+    _scoreWasChecked = NO;
+    _scoreReported = NO;
     
-    stop = NO;
+    _stop = NO;
         
-    gameoverDeathStart = NO;
+    _gameoverDeathStart = NO;
     
-    slowed = NO;
+    _slowed = NO;
     
     
 }
@@ -374,12 +397,12 @@
 // RESTART GAME
 - (void) restart{
     
-    [self popState]; // rmv gameover
+    [self popState]; // rmv _gameover
     
-    intro = NO;
-    backgroundProgress = 3150;
-    introStart = NO;
-    eggY = screenHeight/2;
+    _intro = NO;
+    _backgroundProgress = 3150;
+    _introStart = NO;
+    _eggY = screenHeight/2;
     
     
     [self resetGameData];
@@ -400,26 +423,26 @@
     
 
     // BUTTON SPECIFIC
-    intro = YES;
-    backgroundProgress = 3470; //3150 = start;  3470 = inital intro
-    introStart = YES;
-    eggY = (screenHeight - (35)); // for intro, put animation on grass
+    _intro = YES;
+    _backgroundProgress = 3470; //3150 = start;  3470 = inital _intro
+    _introStart = YES;
+    _eggY = (screenHeight - (35)); // for _intro, put animation on grass
     
     
     // UNLOCK FREEPLAY IN MAINMENU
-    if(freeplayUnlocked)
+    if(_freeplayUnlocked)
     {
-        [(MainMenu*) [stateStack objectAtIndex:0] unlockFreeplay];
+        [(MainMenu*) [_stateStack objectAtIndex:0] unlockFreeplay];
     }
     else
     {
-        [(MainMenu*) [stateStack objectAtIndex:0] resetPlayBtn];
+        [(MainMenu*) [_stateStack objectAtIndex:0] resetPlayBtn];
     }
     
     
     
     // RETURN TO MAIN MENU
-    [self popState]; // rmv gameover
+    [self popState]; // rmv _gameover
     
     
 
@@ -432,22 +455,22 @@
 // BACKGROUND ANIMATION
 - (void) updateBackgroundProgress{
     
-    if(!outro){
-        backgroundProgress -= 0.5; // 0.5 = speed of background
+    if(!_outro){
+        _backgroundProgress -= 0.5; // 0.5 = speed of background
     }
 
-    //NSLog(@" BCKGRND = %f", backgroundProgress);
+    //NSLog(@" BCKGRND = %f", _backgroundProgress);
 }
 
 
 
 // MUSIC and SOUND
 - (void) musicSelect: (BOOL) state{
-    state ? [mp playSong:song] : [mp stop];
+    state ? [_mp playSong:_song] : [_mp stop];
 }
 
 - (void) sfxSelect: (BOOL) state{
-    sfx = state;
+    _sfx = state;
     float volume = state ? 1 : 0;
     [SoundEffect setMasterVolume:volume];
 }
@@ -457,22 +480,22 @@
 // HELPERS
 - (void) setCamera:(Matrix *)theCamera{
     
-    inverseView = [Matrix invert:theCamera];
+    _inverseView = [Matrix invert:theCamera];
     
-    //NSLog(@" IGRA - SET CAMERA");
+    //NSLog(@" IGRA - SET _camera");
 }
 
 - (NSString*) currentLeaderboard
 {
-    return freeplayActive ? @"ChickenChallenge.freeplay" : @"ChickenChallenge.hard";
+    return _freeplayActive ? @"ChickenChallenge.freeplay" : @"ChickenChallenge._hard";
 }
 
 - (NSString*) getDifficultyString{
     
-    return @"HARD BOILED";
+    return @"_hard BOILED";
     
-    /* // difficulty select, at one point I considered difficulty settings
-    switch (difficulty) {
+    /* // _difficulty select, at one point I considered _difficulty settings
+    switch (_difficulty) {
         case 1:
             return @"SUNNY SIDE UP";
             break;
@@ -482,7 +505,7 @@
             break;
             
         case 3:
-            return @"HARD BOILED";
+            return @"_hard BOILED";
             break;
             
         default:
@@ -493,15 +516,15 @@
 
 - (void) updateBestScoreDisplay{
     
-    // UPDATE BEST SCORE BASED ON DIFFICULTY
+    // UPDATE BEST SCORE BASED ON _difficulty
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
-    [self setBestScore:[bestScoreSaved integerValue]];
+    NSNumber *_bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
+    [self setBestScore:[_bestScoreSaved integerValue]];
     
 }
 
 - (void) playMusic{
-    [mp playSong:song];
+    [_mp playSong:_song];
 }
 
 - (void) saveScore
@@ -513,39 +536,39 @@
     if( [[GameKitHelper sharedGameKitHelper:self] isPlayerAuthenticated] ) // isPlayerAuthenticated ???
     {
         // SAVE SCORE ON GAMECENTER
-        [[GameKitHelper sharedGameKitHelper:self] reportScore:score forLeaderboardID:[self currentLeaderboard]];
+        [[GameKitHelper sharedGameKitHelper:self] reportScore:_score forLeaderboardID:[self currentLeaderboard]];
         
-        scoreReported = YES;
+        _scoreReported = YES;
     }
     
     //
     // LOCALY SAVE SCORE
-    if(score > bestScore)
+    if(_score > _bestScore)
     {
-        prevBest = bestScore;
+        _prevBest = _bestScore;
         
         
         // SAVE SCORE LOCALY
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *savedScore = [NSNumber numberWithInt:score];
+        NSNumber *savedScore = [NSNumber numberWithInt:_score];
         [defaults setObject:savedScore forKey:[self currentLeaderboard]];
         
     }
     
-    scoreWasChecked = YES;
+    _scoreWasChecked = YES;
 }
 
 - (void) loadScore
 {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
-    [self setBestScore:[bestScoreSaved integerValue]];
+    NSNumber *_bestScoreSaved = [defaults objectForKey:[self currentLeaderboard]];
+    [self setBestScore:[_bestScoreSaved integerValue]];
 }
 
 - (void) mainMenuButtonFix
 {
-    [(MainMenu*) [stateStack objectAtIndex:0] setContinueButton];
+    [(MainMenu*) [_stateStack objectAtIndex:0] setContinueButton];
 }
 
 
@@ -554,29 +577,29 @@
 	[super updateWithGameTime:theGameTime];
     
     
-    self.active = [[self getState] isKindOfClass:[Gameplay class]];
+    _active = [[self getState] isKindOfClass:[Gameplay class]];
     
 
-    // SAVE SCORE AT OUTRO - GAME VICTORY
-    if( !scoreWasChecked )
+    // SAVE SCORE AT _outro - GAME VICTORY
+    if( !_scoreWasChecked )
     {
-        if(outro){
+        if(_outro){
             [self saveScore];
         }
     }
 
     
     // GAME OVER
-    if( gameover )
+    if( _gameover )
     {
         
         
-        gameover = false;
-        stop = YES;
-        gameoverDeathStart = YES;
+        _gameover = false;
+        _stop = YES;
+        _gameoverDeathStart = YES;
         
 
-        if( eggY < (screenHeight/2) )
+        if( _eggY < (screenHeight/2) )
         {
             // VICTORY
             [SoundEngine play:5 withVolume:1.5];
@@ -596,7 +619,7 @@
         
         
         // SAVE SCORE - IF GAME OVER
-        if( !scoreWasChecked )
+        if( !_scoreWasChecked )
         {
             [self saveScore];
         }
@@ -604,14 +627,14 @@
     }
     
     // GAME NOT OVER
-    if(!self.gameover && self.active)
+    if(!_gameover && _active)
     {
         
         //
         // EASTER EGG :)
-        if(!self.easterEgg && self.score > 999) 
+        if(!_easterEgg && _score > 999)
         {
-            self.easterEgg = YES;
+            _easterEgg = YES;
         }
     }
     

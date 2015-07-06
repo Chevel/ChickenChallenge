@@ -20,18 +20,14 @@
 
 // VARIABLES
 @property (nonatomic, retain) Vector2 *position;
-@property Boolean dead;
-@property int life;
-
-
+@property (readwrite) BOOL dead;
+@property (readwrite) BOOL zombie;
 
 
 // METHODS
 - (BOOL) containsVector:(Vector2 *) touchPoz;
 
-- (BOOL) isDead;
-
-- (BOOL) isZombie;
+- (void) reincarnation;
 
 - (void) updateWithGameTime:(GameTime *)gameTime;
 

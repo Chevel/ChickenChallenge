@@ -18,8 +18,6 @@
 // METHODS
 - (void) moveCloser;
 
-- (BOOL) atCenter;
-
 - (void) updateRotation;
 
 

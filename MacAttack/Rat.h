@@ -7,9 +7,6 @@
 #import <Foundation/Foundation.h>
 #import "Enemy.h"
 
-@interface Rat : Enemy {
-  
-    
-}
+@interface Rat : Enemy 
 
 @end
